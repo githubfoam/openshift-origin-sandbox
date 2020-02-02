@@ -5,8 +5,10 @@ Travis (.com) master branch:
 
 smoke tests
 ~~~~
-nodejs-sample-pipeline
+OpenShift 3 Jenkins Example
 https://github.com/openshift/origin/tree/master/examples/jenkins
+Using Jenkins Pipelines with OKD
+https://github.com/openshift/origin/tree/master/examples/jenkins/pipeline
 ~~~~
 CIS Kubernetes Benchmark - kube-bench
 ~~~~

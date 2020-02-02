@@ -27,12 +27,11 @@ script:
   - ls
   # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
   # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
-  # Install jenkinsci
-  - oc new-app jenkins-ephemeral #If you want to use persistent storage, use jenkins-persistent instead.
-  # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
-  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
-  - oc start-build nodejs-sample-pipeline
-  - oc get pods
+  # Deploying a Jenkins Pod
+  - oc new-project test
+  - oc new-app -f https://github.com/openshift/origin/blob/master/examples/jenkins/jenkins-ephemeral-template.json
+  - oc status
+  - oc get svc
   # pipeline project
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift # create the example imagestreams and templates in the openshift namespace
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshif
@@ -48,6 +47,16 @@ script:
   - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/maven-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
   - oc start-build maven-pipeline #Launch a new build
   - oc status
+  # Blue Green Deployment Example
+  - oc new-project bluegreen-pipeline-project
+  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  - oc start-build bluegreen-pipeline #Launch a new build
+  - oc status
+  # NodeJS (and Declarative) Pipeline Example
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
+  # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster  
+  - oc start-build nodejs-sample-pipeline
+  - oc get pods
   # Install go
   - go version
   - go env
@@ -84,3 +93,4 @@ script:
   - ./kube-bench --version ocp-3.11 # Benchmark OKD
 after_install:
   - oc status
+  - oc get svc
