@@ -32,6 +32,16 @@ script:
   # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
   - oc start-build nodejs-sample-pipeline
+  - oc get pods
+  # pipeline project
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift # create the example imagestreams and templates in the openshift namespace
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshif
+  - oc get is -n openshift #Confirm that the example imagestreams and templates are present in the openshift namespace
+  - oc get templates -n openshift
+  - oc new-project pipelineproject
+  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  - oc start-build sample-pipeline #Launch a new build
+  - oc status
   # Install go
   - go version
   - go env

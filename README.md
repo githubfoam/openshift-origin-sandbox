@@ -6,6 +6,7 @@ Travis (.com) master branch:
 smoke tests
 ~~~~
 nodejs-sample-pipeline
+https://github.com/openshift/origin/tree/master/examples/jenkins
 ~~~~
 CIS Kubernetes Benchmark - kube-bench
 ~~~~
