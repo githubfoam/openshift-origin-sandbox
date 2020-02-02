@@ -29,7 +29,15 @@ before_install:
   # - tar xvf openshift-origin-client-tools*.tar.gz
   # - sudo mv /tmp/ocdir/*/oc /usr/bin/
   - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
-
+  - |
+   cat << EOF | sudo tee /etc/docker/daemon.json
+   {
+       "insecure-registries" : [ "172.30.0.0/16" ]
+   }
+   EOF
+  - sudo systemctl restart docker
+  - oc cluster up
+  - curl http://127.0.0.1:8443 
 script:
   - docker version
   - oc version
