@@ -1,14 +1,11 @@
-branches:
-  only:
-  - dev  
+# OpenShift Deployment
+# https://docs.travis-ci.com/user/deployment-v2/providers/openshift/
 language: java
 jdk:
   - openjdk11
 deploy:
   provider: openshift
-  user: test
-  password: test
-  app: travis-chat
-  domain: chat
-  on:
-    jdk: openjdk11
+  server:
+  token:
+  project:
+  # user: test
