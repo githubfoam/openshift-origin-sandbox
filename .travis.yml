@@ -26,8 +26,6 @@ script:
   - oc cluster up
   # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
   # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
-  - oc status
-  - oc get svc
   # pipeline project
   # Error from server (Forbidden): imagestreams.image.openshift.io is forbidden: User "developer" cannot create imagestreams.image.openshift.io in the namespace "openshift": no RBAC policy matched
   # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift # create the example imagestreams and templates in the openshift namespace
@@ -39,21 +37,26 @@ script:
   - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
   - oc start-build sample-pipeline #Launch a new build
   - oc status
-  # # Maven Slave Example
-  # - oc new-project maven-pipeline-project
-  # - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/maven-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  # - oc start-build maven-pipeline #Launch a new build
-  # - oc status
-  # # Blue Green Deployment Example
-  # - oc new-project bluegreen-pipeline-project
-  # - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  # - oc start-build bluegreen-pipeline #Launch a new build
-  # - oc status
-  # # NodeJS (and Declarative) Pipeline Example
-  # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
-  # # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
-  # - oc start-build nodejs-sample-pipeline
-  # - oc get pods
+  - oc get svc
+  # Maven Slave Example
+  - oc new-project maven-pipeline-project
+  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/maven-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  - oc start-build maven-pipeline #Launch a new build
+  - oc status
+  - oc get svc
+  # Blue Green Deployment Example
+  - oc new-project bluegreen-pipeline-project
+  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  - oc start-build bluegreen-pipeline #Launch a new build
+  - oc status
+  - oc get svc
+  # NodeJS (and Declarative) Pipeline Example
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
+  # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
+  - oc start-build nodejs-sample-pipeline
+  - oc status
+  - oc get svc  
+  - oc get pods
   # # Install go
   # - go version
   # - go env
