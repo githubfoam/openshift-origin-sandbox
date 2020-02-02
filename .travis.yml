@@ -26,16 +26,13 @@ script:
   - oc cluster up
   # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
   # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
-  # Deploying a Jenkins Pod
-  - oc new-project test
-  - oc new-app -f https://github.com/openshift/origin/blob/master/examples/jenkins/jenkins-ephemeral-template.json
   - oc status
   - oc get svc
   # pipeline project
-  # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift # create the example imagestreams and templates in the openshift namespace
-  # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshif
-  # - oc get is -n openshift #Confirm that the example imagestreams and templates are present in the openshift namespace
-  # - oc get templates -n openshift
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift # create the example imagestreams and templates in the openshift namespace
+  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshif
+  - oc get is -n openshift #Confirm that the example imagestreams and templates are present in the openshift namespace
+  - oc get templates -n openshift
   # Basic Pipeline
   # - oc new-project pipelineproject
   # - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
