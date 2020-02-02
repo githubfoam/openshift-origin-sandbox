@@ -9,11 +9,7 @@ services:
 - docker
 env:
 - OKD_VERSION="3.11.0" GO_VERSION="1.13.7" # OpenShift Origin (OKD)
-# env:
-# - OKD_VERSION="3.11.0" # OpenShift Origin (OKD)
-# - GO_VERSION="1.13.7"
 before_install:
-  # - export OKD_VERSION="3.11.0"
   - wget https://github.com/openshift/origin/releases/download/v$OKD_VERSION/openshift-origin-client-tools-v$OKD_VERSION-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
   - mkdir /tmp/ocdir && cd /tmp/ocdir && tar -xvf /tmp/oc.tar.gz
   - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
@@ -31,15 +27,14 @@ script:
   - ls
   # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
   # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
-  # install jenkinsci
+  # Install jenkinsci
   - oc new-app jenkins-ephemeral #If you want to use persistent storage, use jenkins-persistent instead.
   # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
   - oc start-build nodejs-sample-pipeline
-  # installing go
+  # Install go
   - go version
   - go env
-  # - export GO_VERSION="1.13.7"
   - curl -O https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz
   - sha256sum go$GO_VERSION.linux-amd64.tar.gz #Verify the .tar file
   - tar -xvf go$GO_VERSION.linux-amd64.tar.gz
@@ -63,13 +58,13 @@ script:
   - "./hello"
   - go version
   - go env
-  # Installing from sources kube-bench
+  # Install kube-bench from sources
   - go get github.com/aquasecurity/kube-bench
   - go get github.com/golang/dep/cmd/dep
   - cd $GOPATH/src/github.com/aquasecurity/kube-bench
   # - $GOPATH/bin/dep ensure -vendor-only
   - "go build -o kube-bench ."
-  - "./kube-bench --help" #See all supported options
-  - ./kube-bench --version ocp-3.11
+  - "./kube-bench --help" # See all supported options
+  - ./kube-bench --version ocp-3.11 # Benchmark OKD
 after_install:
   - oc status
