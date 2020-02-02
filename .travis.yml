@@ -33,29 +33,29 @@ script:
   # - oc get is -n openshift #Confirm that the example imagestreams and templates are present in the openshift namespace
   # - oc get templates -n openshift
   # Basic Pipeline
-  - oc new-project pipelineproject
-  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  - oc start-build sample-pipeline #Launch a new build
-  - oc status
-  - oc get svc
+  # - oc new-project pipelineproject
+  # - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  # - oc start-build sample-pipeline #Launch a new build
+  # - oc status
+  # - oc get svc
   # Maven Slave Example
   - oc new-project maven-pipeline-project
   - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/maven-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  - oc start-build maven-pipeline #Launch a new build
+  - oc start-build openshift-jee-sample-maven-pipeline #Launch a new build
   - oc status
   - oc get svc
-  # Blue Green Deployment Example
-  - oc new-project bluegreen-pipeline-project
-  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  - oc start-build bluegreen-pipeline #Launch a new build
+  # # Blue Green Deployment Example
+  # - oc new-project bluegreen-pipeline-project
+  # - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  # - oc start-build bluegreen-pipeline #Launch a new build
+  # - oc status
+  # - oc get svc
+  # # NodeJS (and Declarative) Pipeline Example
+  # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
+  # # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
+  # - oc start-build nodejs-sample-pipeline
   - oc status
   - oc get svc
-  # NodeJS (and Declarative) Pipeline Example
-  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
-  # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
-  - oc start-build nodejs-sample-pipeline
-  - oc status
-  - oc get svc  
   - oc get pods
   # # Install go
   # - go version

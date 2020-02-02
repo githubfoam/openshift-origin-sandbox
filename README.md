@@ -5,6 +5,11 @@ Travis (.com) master branch:
 
 smoke tests
 ~~~~
+Basic Pipeline
+Maven Slave Example
+Blue Green Deployment Example
+NodeJS (and Declarative) Pipeline Example
+
 OpenShift 3 Jenkins Example
 https://github.com/openshift/origin/tree/master/examples/jenkins
 Using Jenkins Pipelines with OKD
