@@ -1,7 +1,7 @@
 distro: bionic
-branches:
-  only:
-  - master
+# branches:
+#   only:
+#   - master
 sudo: required
 language:
 - bash
@@ -38,9 +38,15 @@ script:
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshif
   - oc get is -n openshift #Confirm that the example imagestreams and templates are present in the openshift namespace
   - oc get templates -n openshift
+  # Basic Pipeline
   - oc new-project pipelineproject
   - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
   - oc start-build sample-pipeline #Launch a new build
+  - oc status
+  # Maven Slave Example
+  - oc new-project maven-pipeline-project
+  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/maven-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
+  - oc start-build maven-pipeline #Launch a new build
   - oc status
   # Install go
   - go version
