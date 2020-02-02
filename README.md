@@ -1,6 +1,11 @@
 # openshift-origin-sandbox
 openshift origin
 
+smoke tests
+~~~~
+nodejs-sample-pipeline
+~~~~
+CIS Kubernetes Benchmark - kube-bench
 ~~~~
 == Remediations ==
 
