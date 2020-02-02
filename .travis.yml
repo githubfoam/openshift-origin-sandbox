@@ -36,7 +36,8 @@ script:
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
   - oc start-build nodejs-sample-pipeline
   # installing go
-  - echo $GOPATH
+  - go version
+  - go env
   - export GO_VERSION="1.13.7"
   - curl -O https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz
   - sha256sum go$GO_VERSION.linux-amd64.tar.gz #Verify the .tar file
@@ -59,11 +60,13 @@ script:
    EOF
   - go build
   - "./hello"
+  - go version
+  - go env
   # Installing from sources kube-bench
   - go get github.com/aquasecurity/kube-bench
   - go get github.com/golang/dep/cmd/dep
   - cd $GOPATH/src/github.com/aquasecurity/kube-bench
-  - $GOPATH/bin/dep ensure -vendor-only
+  # - $GOPATH/bin/dep ensure -vendor-only
   - "go build -o kube-bench ."
   - "./kube-bench --help" #See all supported options
   - ./kube-bench --version ocp-3.11
