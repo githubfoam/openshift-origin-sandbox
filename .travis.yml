@@ -26,5 +26,9 @@ script:
   - oc cluster up
   # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
   # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
+  - oc new-app jenkins-ephemeral #If you want to use persistent storage, use jenkins-persistent instead.
+  - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
+  # - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
+  - oc start-build nodejs-sample-pipeline
 after_install:
   - oc status
