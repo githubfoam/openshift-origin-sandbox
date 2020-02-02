@@ -29,6 +29,9 @@ before_install:
   # - tar xvf openshift-origin-client-tools*.tar.gz
   # - sudo mv /tmp/ocdir/*/oc /usr/bin/
   - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
+script:
+  - docker version
+  - oc version
   - |
    cat << EOF | sudo tee /etc/docker/daemon.json
    {
@@ -37,9 +40,10 @@ before_install:
    EOF
   - sudo systemctl restart docker
   - oc cluster up
-  - curl http://127.0.0.1:8443 
-script:
-  - docker version
-  - oc version
+  # - curl http://127.0.0.1:8443 #OKD Cluster listening on local interface
+  - curl http://localhost:8443 #OKD Cluster listening on local interface
+  # - curl https://127.0.0.1:8443/console #Access Admin Console in a browser
   # - oc cluster up
   # - java -version
+after_install:
+  - oc status
