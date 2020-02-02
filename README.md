@@ -1,5 +1,11 @@
 # openshift-origin-sandbox
-openshift origin
+
+Travis (.com) master branch:
+[![Build Status](https://travis-ci.com/githubfoam/openshift-origin-sandbox.svg?branch=dev)](https://travis-ci.com/githubfoam/openshift-origin-sandbox)  
+
+Travis (.com) dev branch:
+[![Build Status](https://travis-ci.com/githubfoam/openshift-origin-sandbox.svg?branch=dev)](https://travis-ci.com/githubfoam/openshift-origin-sandbox)  
+
 
 smoke tests
 ~~~~

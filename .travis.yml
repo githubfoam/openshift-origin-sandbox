@@ -1,7 +1,7 @@
 distro: bionic
 branches:
   only:
-  - test
+  - master
 sudo: required
 language:
 - bash
