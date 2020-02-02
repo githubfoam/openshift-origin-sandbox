@@ -1,2 +1,11 @@
+language: java
+jdk:
+  - openjdk11
 deploy:
   provider: openshift
+  user: test
+  password: test
+  app: travis-chat
+  domain: chat
+  on:
+    jdk: openjdk11
