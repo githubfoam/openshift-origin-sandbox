@@ -3,6 +3,10 @@
 Travis (.com) master branch:
 [![Build Status](https://travis-ci.com/githubfoam/openshift-origin-sandbox.svg?branch=master)](https://travis-ci.com/githubfoam/openshift-origin-sandbox)  
 
+~~~~
+travisci test branch
+https://docs.travis-ci.com/user/deployment-v2/providers/openshift/
+~~~~
 smoke tests
 ~~~~
 nodejs-sample-pipeline
@@ -54,4 +58,15 @@ chmod 644 /etc/origin/node/client-ca.crt
 4 checks INFO
 
 The command "./kube-bench --version ocp-3.11" exited with 0.
+~~~~
+
+~~~~
+CIS Kubernetes benchmark
+https://docs.docker.com/compliance/cis/k8s/
+kube-bench
+https://github.com/aquasecurity/kube-bench
+An objective, consensus-driven security guideline for the Kubernetes Server Software
+https://www.cisecurity.org/benchmark/kubernetes/
+An objective, consensus-driven security guideline for the Microsoft Azure Cloud Providers.
+https://www.cisecurity.org/benchmark/azure/
 ~~~~
