@@ -68,7 +68,7 @@ script:
   - "go build -o kube-bench ."
   - "./kube-bench --help" # See all supported options
   - ./kube-bench --version ocp-3.11 # Benchmark OKD
-after_install:
+after_success:
   - oc status
   - oc get svc
   - oc get pods
