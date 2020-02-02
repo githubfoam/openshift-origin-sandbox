@@ -31,8 +31,7 @@ before_install:
   - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
 
 script:
-  # run tests
   - docker version
-  - oc version
-  - oc cluster up
-  - java -version
+  # - oc version
+  # - oc cluster up
+  # - java -version
