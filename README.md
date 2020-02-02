@@ -9,7 +9,15 @@ https://docs.travis-ci.com/user/deployment-v2/providers/openshift/
 ~~~~
 smoke tests
 ~~~~
-nodejs-sample-pipeline
+Basic Pipeline
+Maven Slave Example
+Blue Green Deployment Example
+NodeJS (and Declarative) Pipeline Example
+
+OpenShift 3 Jenkins Example
+https://github.com/openshift/origin/tree/master/examples/jenkins
+Using Jenkins Pipelines with OKD
+https://github.com/openshift/origin/tree/master/examples/jenkins/pipeline
 ~~~~
 CIS Kubernetes Benchmark - kube-bench
 ~~~~
