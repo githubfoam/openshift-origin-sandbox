@@ -9,8 +9,10 @@ services:
 - docker
 env:
 - OKD_VERSION="3.11.0" # OpenShift Origin (OKD)
+- GO_VERSION="1.12.9"
 before_install:
-  - wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
+  # - wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
+  - wget https://github.com/openshift/origin/releases/download/v$OKD_VERSION/openshift-origin-client-tools-v$OKD_VERSION-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
   - mkdir /tmp/ocdir && cd /tmp/ocdir && tar -xvf /tmp/oc.tar.gz
   - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
 script:
@@ -32,7 +34,31 @@ script:
   # - oc create -f nodejs-sample-pipeline.yaml # create the BuildConfig in your OpenShift cluster
   - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
   - oc start-build nodejs-sample-pipeline
-  - go get github.com/aquasecurity/kube-bench # Installing from sources kube-bench
+  # installing go
+  - echo $GOPATH
+  - curl -O https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz
+  - sha256sum go$GO_VERSION.linux-amd64.tar.gz #Verify the .tar file
+  - tar -xvf go$GO_VERSION.linux-amd64.tar.gz
+  - sudo chown -R root:root ./go
+  - sudo mv go /usr/local
+  - export GOPATH=$HOME/go
+  - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+  # Test go Installation
+  - mkdir -p go/src/hello && cd go/src/hello
+  - |
+   cat << EOF | sudo tee hello.go
+    package main
+
+    import "fmt"
+
+    func main() {
+        fmt.Printf("hola mundo, world\n")
+    }
+   EOF
+  - go build
+  - "./hello"
+  # Installing from sources kube-bench
+  - go get github.com/aquasecurity/kube-bench
   - go get github.com/golang/dep/cmd/dep
   - cd $GOPATH/src/github.com/aquasecurity/kube-bench
   - $GOPATH/bin/dep ensure -vendor-only
