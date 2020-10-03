@@ -1,6 +1,12 @@
 IMAGE := alpine/fio
 APP:="scripts/archlinux-req.sh"
 
+deploy-ubuntu2004:
+	bash scripts/deploy-ubuntu2004.sh
+
+deploy-bionic64:
+	bash scripts/deploy-bionic64.sh
+
 deploy-groovy64:
 	bash scripts/deploy-groovy64.sh
 

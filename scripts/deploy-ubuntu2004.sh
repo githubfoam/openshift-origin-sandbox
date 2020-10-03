@@ -50,12 +50,18 @@ echo "==========================================================================
 
 # Waiting for domain to get an IP address.
 # https://app.vagrantup.com/ubuntu/boxes/focal64
-vagrant box add "ubuntu/focal64" --provider=virtualbox
-vagrant mutate "ubuntu/focal64" libvirt
+# vagrant box add "ubuntu/focal64" --provider=virtualbox
+# vagrant mutate "ubuntu/focal64" libvirt
+# vagrant init --template Vagrantfile.provision.ansible.erb
+# # must be created in project root directory with Vagrantfile template file
+# vagrant up --provider=libvirt "vg-docker-03"
+
+# https://github.com/chef/bento/tree/master/packer_templates/ubuntu
+vagrant box add "bento/ubuntu-20.04" --provider=virtualbox
+vagrant mutate "bento/ubuntu-20.04" libvirt
 vagrant init --template Vagrantfile.provision.ansible.erb
 # must be created in project root directory with Vagrantfile template file
 vagrant up --provider=libvirt "vg-docker-03"
-
 
 vagrant box list #veridy installed boxes
 vagrant status #Check the status of the VMs to see that none of them have been created yet
