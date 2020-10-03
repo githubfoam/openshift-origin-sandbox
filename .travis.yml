@@ -1,74 +1,87 @@
-distro: bionic
-branches:
-  only:
-  - master
-  - test
-  - dev
+---
 sudo: required
-language:
-- bash
-services:
-- docker
-env:
-- OKD_VERSION="3.11.0" GO_VERSION="1.13.7" # OpenShift Origin (OKD)
-before_install:
-  - wget https://github.com/openshift/origin/releases/download/v$OKD_VERSION/openshift-origin-client-tools-v$OKD_VERSION-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
-  - mkdir /tmp/ocdir && cd /tmp/ocdir && tar -xvf /tmp/oc.tar.gz
-  - sudo mv  /tmp/ocdir/*/oc /tmp/ocdir/*/kubectl  /usr/local/bin/
-script:
-  - |
-   cat << EOF | sudo tee /etc/docker/daemon.json
-   {
-       "insecure-registries" : [ "172.30.0.0/16" ]
-   }
-   EOF
-  - sudo systemctl restart docker
-  - oc cluster up
-  # Basic Pipeline
-  - oc new-project pipelineproject
-  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  - oc start-build sample-pipeline #Launch a new build
-  # Blue Green Deployment Example
-  - oc new-project bluegreen-pipeline-project
-  - oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/bluegreen-pipeline.yaml # Instantiate the template which will create a pipeline buildconfig and some other resources
-  - oc start-build bluegreen-pipeline #Launch a new build
-  # NodeJS (and Declarative) Pipeline Example
-  - oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/nodejs-sample-pipeline.yaml
-  - oc start-build nodejs-sample-pipeline
-  # Install go
-  - go version
-  - go env
-  - curl -O https://storage.googleapis.com/golang/go$GO_VERSION.linux-amd64.tar.gz
-  - sha256sum go$GO_VERSION.linux-amd64.tar.gz #Verify the .tar file
-  - tar -xvf go$GO_VERSION.linux-amd64.tar.gz
-  - sudo chown -R root:root ./go
-  - sudo mv go /usr/local
-  - export GOPATH=$HOME/go
-  - export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
-  # Test go Installation
-  - mkdir -p go/src/hello && cd go/src/hello
-  - |
-   cat << EOF | sudo tee hello.go
-    package main
+dist: bionic
+notifications:
+  slack:
+    on_failure: always
+matrix:
+  fast_finish: true
+  include:
 
-    import "fmt"
+    # - name: "fedora 32 (bento) provision bash Python 3.7 on bionic amd64"
+    #   dist: bionic
+    #   arch: amd64
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #     - sudo make deploy-vagrant
+    #     - sudo make deploy-libvirt
+    #     - sudo make deploy-fedora-bento
+    #   after_success:
+    #     - deactivate
+    #     - sudo vagrant destroy -f # required to run Vagrantfile template        
+    #     - sudo rm Vagrantfile # required to run Vagrantfile template
+            
+    - name: "deploy OKD Python 3.7 on bionic amd64"
+      dist: bionic
+      arch: amd64
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - sudo make deploy-vagrant
+        - sudo make deploy-libvirt
+        # - sudo make deploy-fedora-bento
+      after_success:
+        - deactivate
+        - sudo vagrant destroy -f # required to run Vagrantfile template        
+        - sudo rm Vagrantfile # required to run Vagrantfile template
 
-    func main() {
-        fmt.Printf("hola mundo \n")
-    }
-   EOF
-  - go build
-  - "./hello"
-  - go version
-  - go env
-  # Install kube-bench from sources
-  - go get github.com/aquasecurity/kube-bench
-  - go get github.com/golang/dep/cmd/dep
-  - cd $GOPATH/src/github.com/aquasecurity/kube-bench
-  - "go build -o kube-bench ."
-  - "./kube-bench --help" # See all supported options
-  - ./kube-bench --version ocp-3.11 # Benchmark OKD
-after_success:
-  - oc status
-  - oc get svc
-  - oc get pods
+    - name: "deploy OKD Python 3.7 on bionic amd64"
+      dist: focal
+      arch: amd64
+      language: python
+      python: 3.7
+      before_install:
+        - pip3 install virtualenv
+        - virtualenv -p $(which python3) ~venvpy3
+        - source ~venvpy3/bin/activate
+        - pip install -r requirements.txt
+      script:
+        - sudo make deploy-vagrant
+        - sudo make deploy-libvirt
+        # - sudo make deploy-fedora-bento
+      after_success:
+        - deactivate
+        - sudo vagrant destroy -f # required to run Vagrantfile template        
+        - sudo rm Vagrantfile # required to run Vagrantfile template
+
+    # - name: "fedora 32 cloud-base provision bash Python 3.7 on bionic amd64"
+    #   dist: bionic
+    #   arch: amd64
+    #   language: python
+    #   python: 3.7
+    #   before_install:
+    #     - pip3 install virtualenv
+    #     - virtualenv -p $(which python3) ~venvpy3
+    #     - source ~venvpy3/bin/activate
+    #     - pip install -r requirements.txt
+    #   script:
+    #     - sudo make deploy-vagrant
+    #     - sudo make deploy-libvirt
+    #     - sudo make deploy-fedora
+    #   after_success:
+    #     - deactivate
+    #     - sudo vagrant destroy -f # required to run Vagrantfile template        
+    #     - sudo rm Vagrantfile # required to run Vagrantfile template     
+
+    

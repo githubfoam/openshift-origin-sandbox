@@ -1,7 +1,5 @@
 # openshift-origin-sandbox
 
-Travis (.com) master branch:
-[![Build Status](https://travis-ci.com/githubfoam/openshift-origin-sandbox.svg?branch=master)](https://travis-ci.com/githubfoam/openshift-origin-sandbox)  
 
 ~~~~
 travisci test branch
@@ -69,6 +67,15 @@ The command "./kube-bench --version ocp-3.11" exited with 0.
 ~~~~
 
 ~~~~
+OKD Latest Installing Clusters Planning your installation 
+Environment scenarios
+    Single master and node on one system
+    Single master and multiple nodes
+    Multiple masters using native HA
+    Multiple Masters Using Native HA with External Clustered etcd
+    Stand-alone registry
+https://docs.okd.io/latest/install/index.html
+
 CIS Kubernetes benchmark
 https://docs.docker.com/compliance/cis/k8s/
 kube-bench
