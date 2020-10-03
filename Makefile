@@ -1,6 +1,12 @@
 IMAGE := alpine/fio
 APP:="scripts/archlinux-req.sh"
 
+deploy-ubuntu1804:
+	bash scripts/deploy-ubuntu1804.sh
+
+deploy-ubuntu1910:
+	bash scripts/deploy-ubuntu1910.sh
+
 deploy-ubuntu2004:
 	bash scripts/deploy-ubuntu2004.sh
 
