@@ -41,12 +41,19 @@ echo "==========================================================================
 # vagrant mutate "bento/debian-10.4" libvirt
 # vagrant up --provider=libvirt "vg-controller-87"
 
-# https://github.com/chef/bento/tree/master/packer_templates/ubuntu
-vagrant box add "bento/ubuntu-19.10" --provider=virtualbox
-vagrant mutate "bento/ubuntu-19.10" libvirt
+# # https://github.com/chef/bento/tree/master/packer_templates/ubuntu
+# vagrant box add "bento/ubuntu-19.10" --provider=virtualbox
+# vagrant mutate "bento/ubuntu-19.10" libvirt
+# vagrant init --template Vagrantfile.provision.ansible.erb
+# # must be created in project root directory with Vagrantfile template file
+# vagrant up --provider=libvirt "vg-docker-03"
+
+# https://app.vagrantup.com/ubuntu/boxes/focal64
+vagrant box add "ubuntu/groovy64" --provider=virtualbox
+vagrant mutate "ubuntu/groovy64" libvirt
 vagrant init --template Vagrantfile.provision.ansible.erb
 # must be created in project root directory with Vagrantfile template file
-vagrant up --provider=libvirt "vg-docker-03"
+vagrant up --provider=libvirt "vg-docker-02"
 
 vagrant box list #veridy installed boxes
 vagrant status #Check the status of the VMs to see that none of them have been created yet

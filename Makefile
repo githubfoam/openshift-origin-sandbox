@@ -1,8 +1,11 @@
 IMAGE := alpine/fio
 APP:="scripts/archlinux-req.sh"
 
-deploy-boxes:
-	bash scripts/deploy-boxes.sh
+deploy-groovy64:
+	bash scripts/deploy-groovy64.sh
+
+deploy-focal64:
+	bash scripts/deploy-focal64.sh
 
 deploy-libvirt:
 	bash scripts/deploy-libvirt.sh
